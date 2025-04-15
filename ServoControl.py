@@ -12,7 +12,7 @@ for i in range(1, 5):
 
 # Function to send only the changed servo
 def send_single_servo(servo_num, value):
-    url = f"https://aeprojecthub.in/flagChange.php?f{servo_num}={value}"
+    url = f"https://aeprojecthub.in/flagChange.php?f5=1&f{servo_num}={value}"
     try:
         response = requests.get(url)
         if response.status_code == 200:
