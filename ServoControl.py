@@ -10,16 +10,20 @@ for i in range(1, 5):
     if prev_key not in st.session_state:
         st.session_state[prev_key] = 90
 
+# Convert 0–180 angle to 0–99
+def convert_angle(angle):
+    return round(angle * (99 / 180))
+
 # Function to send only the changed servo
-def send_single_servo(servo_num, value):
-    # Concatenate servo number and value (e.g., Servo 2 at 45 degrees -> "245")
-    combined_value = f"{servo_num}{value}"
+def send_single_servo(servo_num, angle):
+    scaled_value = convert_angle(angle)
+    combined_value = f"{servo_num}{scaled_value:02d}"  # Ensure it's 2 digits with leading 0
     url = f"https://aeprojecthub.in/flagChange.php?f5=1&f1={combined_value}"
     
     try:
         response = requests.get(url)
         if response.status_code == 200:
-            st.success(f"Sent Servo {servo_num}: {value}")
+            st.success(f"Sent Servo {servo_num}: Angle {angle} → Scaled {scaled_value}")
             st.write("URL:", url)
             st.write("Response:", response.text)
         else:
