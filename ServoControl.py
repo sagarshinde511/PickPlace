@@ -17,6 +17,8 @@ def convert_angle(angle):
 # Function to send only the changed servo
 def send_single_servo(servo_num, angle):
     scaled_value = convert_angle(angle)
+    if(servo_num ==3):
+        servo_num = 0
     combined_value = f"{servo_num}{scaled_value:02d}"  # Ensure it's 2 digits with leading 0
     url = f"https://aeprojecthub.in/flagChange.php?f5=1&f1={combined_value}"
     
